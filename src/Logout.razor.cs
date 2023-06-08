@@ -56,6 +56,8 @@ namespace MetaFrm.Razor
                                 if (Session != null)
                                     await Session.ClearAsync();
 
+                                Config.Client.RemoveAttribute("IsSaveToken");
+
                                 Factory.ViewModelClear();
 
                                 authenticationStateProvider = (AuthenticationStateProvider)AuthStateProvider;
