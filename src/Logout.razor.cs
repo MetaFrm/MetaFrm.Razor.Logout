@@ -56,7 +56,7 @@ namespace MetaFrm.Razor
                                 if (Session != null)
                                     await Session.ClearAsync();
 
-                                Config.Client.RemoveAttribute("IsSaveToken");
+                                Config.Client.Clear();
 
                                 Factory.ViewModelClear();
 
@@ -78,7 +78,7 @@ namespace MetaFrm.Razor
             }
         }
 
-        private async void DeleteToken(string TOKEN_STR)
+        private async void DeleteToken(string? TOKEN_STR)
         {
             Response? response;
 
