@@ -19,6 +19,18 @@ namespace MetaFrm.Razor
         [Inject]
         internal IDeviceToken? DeviceToken { get; set; }
 
+        Auth.AuthenticationStateProvider AuthenticationState;
+
+        /// <summary>
+        /// OnInitialized
+        /// </summary>
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            this.AuthenticationState ??= (this.AuthStateProvider as Auth.AuthenticationStateProvider) ?? (Auth.AuthenticationStateProvider)Factory.CreateInstance(typeof(Auth.AuthenticationStateProvider));
+        }
+
         /// <summary>
         /// OnAfterRenderAsync
         /// </summary>
@@ -28,8 +40,6 @@ namespace MetaFrm.Razor
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             base.OnAfterRender(firstRender);
-
-            AuthenticationStateProvider authenticationStateProvider;
 
             if (firstRender)
             {
@@ -47,24 +57,17 @@ namespace MetaFrm.Razor
                                 this.DeleteToken(tmp);
                         }
 
-                        var auth = this.AuthenticationState.Result;
-
-                        if (auth.User.Identity != null && auth.User.Identity.IsAuthenticated)
+                        if (this.AuthenticationState.IsLogin())
                         {
-                            if (AuthStateProvider != null)
-                            {
-                                if (Session != null)
-                                    await Session.ClearAsync();
+                            if (Session != null)
+                                await Session.ClearAsync();
 
-                                Config.Client.Clear();
+                            Config.Client.Clear();
 
-                                Factory.ViewModelClear();
+                            Factory.ViewModelClear();
 
-                                authenticationStateProvider = (AuthenticationStateProvider)AuthStateProvider;
-
-                                await authenticationStateProvider.SetSessionTokenAsync("");
-                                (AuthStateProvider as AuthenticationStateProvider)?.Notify();
-                            }
+                            await this.AuthenticationState.SetSessionTokenAsync("");
+                            this.AuthenticationState.Notify();
                         }
                     }
 
@@ -87,7 +90,7 @@ namespace MetaFrm.Razor
                 ServiceData serviceData = new()
                 {
                     TransactionScope = true,
-                    Token = this.UserClaim("Token")
+                    Token = this.AuthenticationState.UserClaim("Token")
                 };
                 serviceData["1"].CommandText = this.GetAttribute("DeleteToken");
                 serviceData["1"].AddParameter("TOKEN_TYPE", DbType.NVarChar, 50, "Firebase.FCM");
