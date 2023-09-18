@@ -19,18 +19,6 @@ namespace MetaFrm.Razor
         [Inject]
         internal IDeviceToken? DeviceToken { get; set; }
 
-        Auth.AuthenticationStateProvider AuthenticationState;
-
-        /// <summary>
-        /// OnInitialized
-        /// </summary>
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            this.AuthenticationState ??= (this.AuthStateProvider as Auth.AuthenticationStateProvider) ?? (Auth.AuthenticationStateProvider)Factory.CreateInstance(typeof(Auth.AuthenticationStateProvider));
-        }
-
         /// <summary>
         /// OnAfterRenderAsync
         /// </summary>
@@ -39,6 +27,8 @@ namespace MetaFrm.Razor
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2012:올바르게 ValueTasks 사용", Justification = "<보류 중>")]
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            AuthenticationStateProvider authenticationStateProvider;
+
             base.OnAfterRender(firstRender);
 
             if (firstRender)
@@ -47,7 +37,7 @@ namespace MetaFrm.Razor
                 {
                     this.LogoutViewModel.IsBusy = true;
 
-                    if (this.AuthenticationState != null)
+                    if (this.AuthState != null)
                     {
                         if (this.DeviceToken != null)
                         {
@@ -56,18 +46,24 @@ namespace MetaFrm.Razor
                             if (!tmp.IsNullOrEmpty()) 
                                 this.DeleteToken(tmp);
                         }
+                        var auth = this.AuthState.Result;
 
-                        if (this.AuthenticationState.IsLogin())
+                        if (auth.User.Identity != null && auth.User.Identity.IsAuthenticated)
                         {
-                            if (Session != null)
-                                await Session.ClearAsync();
+                            if (AuthStateProvider != null)
+                            {
+                                if (Session != null)
+                                    await Session.ClearAsync();
 
-                            Config.Client.Clear();
+                                Config.Client.Clear();
 
-                            Factory.ViewModelClear();
+                                Factory.ViewModelClear();
 
-                            await this.AuthenticationState.SetSessionTokenAsync("");
-                            this.AuthenticationState.Notify();
+                                authenticationStateProvider = (AuthenticationStateProvider)AuthStateProvider;
+
+                                await authenticationStateProvider.SetSessionTokenAsync("");
+                                (AuthStateProvider as AuthenticationStateProvider)?.Notify();
+                            }
                         }
                     }
 
@@ -90,7 +86,7 @@ namespace MetaFrm.Razor
                 ServiceData serviceData = new()
                 {
                     TransactionScope = true,
-                    Token = this.AuthenticationState.UserClaim("Token")
+                    Token = this.AuthState.Token()
                 };
                 serviceData["1"].CommandText = this.GetAttribute("DeleteToken");
                 serviceData["1"].AddParameter("TOKEN_TYPE", DbType.NVarChar, 50, "Firebase.FCM");
