@@ -52,8 +52,8 @@ namespace MetaFrm.Razor
                         {
                             if (AuthStateProvider != null)
                             {
-                                if (Session != null)
-                                    await Session.ClearAsync();
+                                if (this.SessionStorage != null)
+                                    await this.SessionStorage.ClearAsync();
 
                                 Config.Client.Clear();
 
