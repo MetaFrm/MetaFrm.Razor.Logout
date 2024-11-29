@@ -8,8 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{118357F5-562
 		src\Logout.razor.cs = src\Logout.razor.cs
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaFrm.Razor.Logout(net6.0)", "MetaFrm.Razor.Logout(net6.0)\MetaFrm.Razor.Logout(net6.0).csproj", "{C6E35B41-E001-4224-8664-4A3BF10595F8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModels", "ViewModels", "{7EE57B92-F6D2-4645-AA48-99EDC825CB0F}"
 	ProjectSection(SolutionItems) = preProject
 		src\ViewModels\LogoutViewModel.cs = src\ViewModels\LogoutViewModel.cs
@@ -19,9 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4BF9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{F744B5FA-1111-41D0-BB42-C5705FCC2C03}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\build_6.0.yml = .github\workflows\build_6.0.yml
-		.github\workflows\build_7.0.yml = .github\workflows\build_7.0.yml
 		.github\workflows\build_8.0.yml = .github\workflows\build_8.0.yml
+		.github\workflows\build_9.0.yml = .github\workflows\build_9.0.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{CDAB90AA-55AC-40EF-A6E9-5749616BA6AD}"
@@ -31,9 +28,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루�
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaFrm.Razor.Logout(net7.0)", "MetaFrm.Razor.Logout(net7.0)\MetaFrm.Razor.Logout(net7.0).csproj", "{BD1E1C4E-EF81-4D81-A063-EF350DA229D1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaFrm.Razor.Logout(net8.0)", "MetaFrm.Razor.Logout(net8.0)\MetaFrm.Razor.Logout(net8.0).csproj", "{715B41F6-B148-4DFA-96DE-85D941BEC7A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaFrm.Razor.Logout(net9.0)", "MetaFrm.Razor.Logout(net9.0)\MetaFrm.Razor.Logout(net9.0).csproj", "{311E78C9-1E1A-4C3A-BF4E-78E86D622E4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,18 +38,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C6E35B41-E001-4224-8664-4A3BF10595F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6E35B41-E001-4224-8664-4A3BF10595F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6E35B41-E001-4224-8664-4A3BF10595F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6E35B41-E001-4224-8664-4A3BF10595F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD1E1C4E-EF81-4D81-A063-EF350DA229D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD1E1C4E-EF81-4D81-A063-EF350DA229D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD1E1C4E-EF81-4D81-A063-EF350DA229D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD1E1C4E-EF81-4D81-A063-EF350DA229D1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{715B41F6-B148-4DFA-96DE-85D941BEC7A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{715B41F6-B148-4DFA-96DE-85D941BEC7A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{715B41F6-B148-4DFA-96DE-85D941BEC7A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{715B41F6-B148-4DFA-96DE-85D941BEC7A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{311E78C9-1E1A-4C3A-BF4E-78E86D622E4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{311E78C9-1E1A-4C3A-BF4E-78E86D622E4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{311E78C9-1E1A-4C3A-BF4E-78E86D622E4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{311E78C9-1E1A-4C3A-BF4E-78E86D622E4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

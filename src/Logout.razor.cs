@@ -24,7 +24,6 @@ namespace MetaFrm.Razor
         /// </summary>
         /// <param name="firstRender"></param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2012:올바르게 ValueTasks 사용", Justification = "<보류 중>")]
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             AuthenticationStateProvider authenticationStateProvider;
@@ -67,7 +66,7 @@ namespace MetaFrm.Razor
                         }
                     }
 
-                    this.LocalStorage?.RemoveItemAsync("Login.Password");
+                    ValueTask? _ = this.LocalStorage?.RemoveItemAsync("Login.Password");
                     this.Navigation?.NavigateTo("/", true);
                 }
                 finally
