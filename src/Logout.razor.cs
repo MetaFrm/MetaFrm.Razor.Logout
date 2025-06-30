@@ -67,8 +67,11 @@ namespace MetaFrm.Razor
                     }
 
                     ValueTask? _ = this.LocalStorage?.RemoveItemAsync("Login.Password");
-                    //this.Navigation?.NavigateTo("/", true);
-                    this.Navigation?.Refresh();
+
+                    if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == Maui.Devices.DevicePlatform.iOS)
+                        this.Navigation?.NavigateTo("/", true);
+                    else
+                        this.Navigation?.Refresh();
                 }
                 finally
                 {
