@@ -67,7 +67,8 @@ namespace MetaFrm.Razor
                     }
 
                     ValueTask? _ = this.LocalStorage?.RemoveItemAsync("Login.Password");
-                    this.Navigation?.NavigateTo("/", true);
+                    //this.Navigation?.NavigateTo("/", true);
+                    this.Navigation?.Refresh();
                 }
                 finally
                 {
