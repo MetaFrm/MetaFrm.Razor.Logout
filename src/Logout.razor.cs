@@ -13,11 +13,19 @@ namespace MetaFrm.Razor
     /// </summary>
     public partial class Logout
     {
-        internal LogoutViewModel LogoutViewModel { get; set; } = Factory.CreateViewModel<LogoutViewModel>();
-
+        internal LogoutViewModel LogoutViewModel { get; set; } = new();
 
         [Inject]
         internal IDeviceToken? DeviceToken { get; set; }
+
+        /// <summary>
+        /// OnInitializedAsync
+        /// </summary>
+        /// <returns></returns>
+        protected override void OnInitialized()
+        {
+            this.LogoutViewModel = this.CreateViewModel<LogoutViewModel>();
+        }
 
         /// <summary>
         /// OnAfterRenderAsync
