@@ -13,7 +13,7 @@ namespace MetaFrm.Razor
     /// </summary>
     public partial class Logout
     {
-        internal LogoutViewModel LogoutViewModel { get; set; } = new();
+        private LogoutViewModel LogoutViewModel { get; set; } = new(null);
 
         [Inject]
         internal IDeviceToken? DeviceToken { get; set; }
@@ -109,7 +109,7 @@ namespace MetaFrm.Razor
                 {
                     if (response.Message != null)
                     {
-                        this.ModalShow("Warning", response.Message, new() { { "Ok", Btn.Warning } }, null);
+                        this.ModalShow("로그아웃", response.Message, new() { { "Ok", Btn.Warning } }, null);
                     }
                 }
             }
