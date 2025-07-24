@@ -40,51 +40,52 @@ namespace MetaFrm.Razor
 
             if (firstRender)
             {
-                try
-                {
-                    this.LogoutViewModel.IsBusy = true;
-
-                    if (this.AuthState != null)
+                if (!this.LogoutViewModel.IsBusy)
+                    try
                     {
-                        if (this.DeviceToken != null)
-                        {
-                            string? tmp = await this.DeviceToken.GetToken();
+                        this.LogoutViewModel.IsBusy = true;
 
-                            if (!tmp.IsNullOrEmpty()) 
-                                this.DeleteToken(tmp);
-                        }
-                        var auth = this.AuthState.Result;
-
-                        if (auth.User.Identity != null && auth.User.Identity.IsAuthenticated)
+                        if (this.AuthState != null)
                         {
-                            if (AuthStateProvider != null)
+                            if (this.DeviceToken != null)
                             {
-                                if (this.SessionStorage != null)
-                                    await this.SessionStorage.ClearAsync();
+                                string? tmp = await this.DeviceToken.GetToken();
 
-                                Config.Client.Clear();
+                                if (!tmp.IsNullOrEmpty())
+                                    this.DeleteToken(tmp);
+                            }
+                            var auth = this.AuthState.Result;
 
-                                Factory.ViewModelClear();
+                            if (auth.User.Identity != null && auth.User.Identity.IsAuthenticated)
+                            {
+                                if (AuthStateProvider != null)
+                                {
+                                    if (this.SessionStorage != null)
+                                        await this.SessionStorage.ClearAsync();
 
-                                authenticationStateProvider = (AuthenticationStateProvider)AuthStateProvider;
+                                    Config.Client.Clear();
 
-                                await authenticationStateProvider.SetSessionTokenAsync("");
-                                (AuthStateProvider as AuthenticationStateProvider)?.Notify();
+                                    Factory.ViewModelClear();
+
+                                    authenticationStateProvider = (AuthenticationStateProvider)AuthStateProvider;
+
+                                    await authenticationStateProvider.SetSessionTokenAsync("");
+                                    (AuthStateProvider as AuthenticationStateProvider)?.Notify();
+                                }
                             }
                         }
+
+                        ValueTask? _ = this.LocalStorage?.RemoveItemAsync("Login.Password");
+
+                        if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == Maui.Devices.DevicePlatform.iOS)
+                            this.Navigation?.NavigateTo("/", true);
+                        else
+                            this.Navigation?.Refresh();
                     }
-
-                    ValueTask? _ = this.LocalStorage?.RemoveItemAsync("Login.Password");
-
-                    if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == Maui.Devices.DevicePlatform.iOS)
-                        this.Navigation?.NavigateTo("/", true);
-                    else
-                        this.Navigation?.Refresh();
-                }
-                finally
-                {
-                    this.LogoutViewModel.IsBusy = false;
-                }
+                    finally
+                    {
+                        this.LogoutViewModel.IsBusy = false;
+                    }
             }
         }
 
