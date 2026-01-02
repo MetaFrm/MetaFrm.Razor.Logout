@@ -5,6 +5,7 @@ using MetaFrm.Razor.ViewModels;
 using MetaFrm.Service;
 using MetaFrm.Web.Bootstrap;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 
 namespace MetaFrm.Razor
 {
@@ -76,11 +77,16 @@ namespace MetaFrm.Razor
                         }
 
                         ValueTask? _ = this.LocalStorage?.RemoveItemAsync("Login.Password");
-
-                        this.Navigation?.NavigateTo("/", true);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (Factory.Logger.IsEnabled(LogLevel.Error))
+                            Factory.Logger.LogError(ex, "Error while OnAfterRenderAsync");
                     }
                     finally
                     {
+                        this.Navigation?.NavigateTo("/", true);
+
                         this.LogoutViewModel.IsBusy = false;
                     }
             }
