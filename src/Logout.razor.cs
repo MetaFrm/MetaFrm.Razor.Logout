@@ -52,7 +52,7 @@ namespace MetaFrm.Razor
                             {
                                 string? tmp = await this.DeviceToken.GetToken();
 
-                                if (!tmp.IsNullOrEmpty())
+                                if (!string.IsNullOrEmpty(tmp))
                                     this.DeleteToken(tmp);
                             }
                             var auth = this.AuthState.Result;
