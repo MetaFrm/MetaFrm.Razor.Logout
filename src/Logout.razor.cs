@@ -61,8 +61,8 @@ namespace MetaFrm.Razor
                             {
                                 if (AuthStateProvider != null)
                                 {
-                                    if (this.SessionStorage != null)
-                                        await this.SessionStorage.ClearAsync();
+                                    if (this.Session != null)
+                                        await this.Session.ClearAsync();
 
                                     Config.Client.Clear();
 
@@ -76,7 +76,7 @@ namespace MetaFrm.Razor
                             }
                         }
 
-                        ValueTask? _ = this.LocalStorage?.RemoveItemAsync("Login.Password");
+                        ValueTask? _ = this.Local?.RemoveItemAsync("Login.Password");
                     }
                     catch (Exception ex)
                     {
