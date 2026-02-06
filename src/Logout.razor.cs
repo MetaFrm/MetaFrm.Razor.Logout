@@ -5,7 +5,6 @@ using MetaFrm.Razor.ViewModels;
 using MetaFrm.Service;
 using MetaFrm.Web.Bootstrap;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Logging;
 
 namespace MetaFrm.Razor
 {
@@ -61,8 +60,8 @@ namespace MetaFrm.Razor
                             {
                                 if (AuthStateProvider != null)
                                 {
-                                    if (this.Session != null)
-                                        await this.Session.ClearAsync();
+                                    if (this.SessionStorage != null)
+                                        await this.SessionStorage.ClearAsync();
 
                                     Config.Client.Clear();
 
@@ -76,12 +75,11 @@ namespace MetaFrm.Razor
                             }
                         }
 
-                        ValueTask? _ = this.Local?.RemoveItemAsync("Login.Password");
+                        ValueTask? _ = this.LocalStorage?.RemoveItemAsync("Login.Password");
                     }
                     catch (Exception ex)
                     {
-                        if (Factory.Logger.IsEnabled(LogLevel.Error))
-                            Factory.Logger.LogError(ex, "Error while OnAfterRenderAsync");
+                        Factory.Logger.Error(ex, "Error while OnAfterRenderAsync");
                     }
                     finally
                     {
